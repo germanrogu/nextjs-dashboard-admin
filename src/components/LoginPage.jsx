@@ -1,11 +1,13 @@
 import { useAuth } from '@/hooks/useAuth';
 import { LockClosedIcon } from '@heroicons/react/24/solid';
+import { useRouter } from 'next/router';
 import { useRef } from 'react';
 
 export default function LoginPage() {
   const auth = useAuth();
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,6 +17,7 @@ export default function LoginPage() {
     try {
       await auth.signIn(email, password);
       console.log('login success', auth.user);
+      router.push('/dashboard');
     } catch (error) {
       console.log('login failed');
       auth.setError('Invalid Username or Password');
